@@ -8,14 +8,14 @@
   Cenario: Login com Sucesso
     Dada abertura do site na página principal
     Quando clicar no botão "Sign in"
-    E preencher os campos de e-mail e senha com as informações do arquivo de "login"
+    E preencher os campos de e-mail e senha com as informações do arquivo de "file.login"
     E clicar no botão "Sign in" para entrar
     Entao deverá ser exibida a pagina principal do usuário
 
   Cenario: Login Inválido
     Dada abertura do site na página principal
     Quando clicar no botão "Sign in"
-    E preencher os campos de e-mail e senha com as informações inválidas do arquivo de "login"
+    E preencher os campos de e-mail e senha com as informações inválidas do arquivo de "file.login"
     E clicar no botão "Sign in" para entrar
     Entao deverá ser exibida a mensagem "Authentication failed"
 
