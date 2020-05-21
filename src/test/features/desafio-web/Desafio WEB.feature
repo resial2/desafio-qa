@@ -17,11 +17,11 @@
     Quando clicar no botão "Sign in"
     E preencher os campos de e-mail e senha com as informações inválidas do arquivo de "file.login"
     E clicar no botão "Sign in" para entrar
-    Entao deverá ser exibida a mensagem "Authentication failed"
+    Entao deverá ser exibida a mensagem "Authentication failed."
 
   Cenario: Login em Branco
     Dada abertura do site na página principal
     Quando clicar no botão "Sign in"
     E não realizar o preenchimento dos campos de e-mail e senha
     E clicar no botão "Sign in" para entrar
-    Entao deverá ser exibida a mensagem "An email address required"
+    Entao deverá ser exibida a mensagem "An email address required."
