@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/features",
         tags = {},
+        strict = true,
         glue = "stepdef",
         plugin = {}
 )
