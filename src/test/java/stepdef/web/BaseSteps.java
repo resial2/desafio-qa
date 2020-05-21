@@ -1,10 +1,10 @@
 package stepdef.web;
 
-import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.service.ExtentService;
 import io.cucumber.java.Before;
 import io.cucumber.java.After;
 import io.cucumber.java.pt.*;
+import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Assert;
 import qa.desafio.Utils;
@@ -12,6 +12,7 @@ import qa.desafio.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import qa.desafio.pageobjects.automationpractice.Home;
 import qa.desafio.pageobjects.automationpractice.Login;
+import qa.desafio.pageobjects.automationpractice.Register;
 import qa.desafio.pageobjects.automationpractice.UserMainPage;
 
 import java.io.UnsupportedEncodingException;
@@ -28,17 +29,18 @@ public class BaseSteps {
         ExtentService.getInstance().setGherkinDialect("pt");
         WebDriver webDriver = new WebDriver();
         driver = webDriver.configDriver("CHROME");
-        propertiesConfig =  Utils.getProperties(DEFAULT_PROPERTIES_FILES_PATH);
+        propertiesConfig = Utils.getProperties(DEFAULT_PROPERTIES_FILES_PATH);
     }
 
     @After()
-    public void clean(){
+    public void clean() {
         driver.quit();
     }
 
     private Home home;
     private Login login;
     private UserMainPage userMainPage;
+    private Register register;
 
     @Dada("abertura do site na página principal")
     public void abertura_do_site_na_página_principal() {
@@ -49,9 +51,12 @@ public class BaseSteps {
     @Quando("clicar no botão {string}")
     public void clicarNoBotão(String button) {
 
-        switch(button.toUpperCase()){
+        switch (button.toUpperCase()) {
             case "SIGN IN":
                 login = home.clicarBotaoSignIn();
+                break;
+            case "CREATE AN ACCOUNT":
+                register = login.clicarBotaoCriarConta();
                 break;
             default:
                 Assert.fail("Botão não configurado.");
@@ -68,7 +73,7 @@ public class BaseSteps {
 
     @E("clicar no botão {string} para entrar")
     public void clicarNoBotãoParaEntrar(String button) {
-        switch (button.toUpperCase()){
+        switch (button.toUpperCase()) {
             case "SIGN IN":
                 userMainPage = login.clicarBotaoLogin();
                 break;
@@ -97,9 +102,39 @@ public class BaseSteps {
     @Entao("deverá ser exibida a mensagem {string}")
     public void deveráSerExibidaAMensagem(String mensagemEsperada) {
         String textoApresentado = login.pegarTextoAlerta();
-        Assert.assertEquals("Texto esperado e Texto apresentado estão divergentes. [ Apresentado: " + textoApresentado +" ] [ Esperado: " + mensagemEsperada +" }", mensagemEsperada, textoApresentado);
+        Assert.assertEquals("Texto esperado e Texto apresentado estão divergentes. [ Apresentado: " + textoApresentado + " ] [ Esperado: " + mensagemEsperada + " }", mensagemEsperada, textoApresentado);
     }
 
 
+    @E("preencher o campo de e-mail para cadastro com um e-mail gerado aleatóriamente, salvando a informação no arquivo de {string}")
+    public void preencherOCampoDeEMailParaCadastroComUmEMailGeradoAleatóriamente(String file) throws ConfigurationException {
+        String email = login.preencherCampoEmailRegister();
+        PropertiesConfiguration props = Utils.getProperties(propertiesConfig.getString(file));
+        props.setProperty("valid.email", email);
+        props.save();
+    }
 
+    @E("realizar o preenchimento do formulário para cadastro com uma senha gerada aleatóriamente que será salva no arquivo {string}")
+    public void realizarOPreenchimentoDoFormulárioParaCadastroComUmaSenhaGeradaAleatóriamenteQueSeráSalvaNoArquivo(String file) throws ConfigurationException {
+        PropertiesConfiguration props = Utils.getProperties(propertiesConfig.getString(file));
+        int password = Utils.gerarNumeroRandom(100000, 100000000);
+        props.setProperty("valid.password", password);
+        props.save();
+        userMainPage = register.selecionarHonorifico(Utils.gerarNumeroRandom(1, 2))
+                .preencherNome(Utils.gerarLetrasAleatorias(8))
+                .preencherSobrenome(Utils.gerarLetrasAleatorias(8))
+                .preencherSenha(password + "")
+                .selecionarDiaNascimento(Utils.gerarNumeroRandom(1, 28))
+                .selecionarMesNascimento(Utils.gerarNumeroRandom(1, 12))
+                .selecionarAnoNasciment(Utils.gerarNumeroRandom(1980, 1999))
+                .preencherCompania(Utils.gerarLetrasAleatorias(15))
+                .preencherEndereco(Utils.gerarLetrasAleatorias(12))
+                .preencherCidade(Utils.gerarLetrasAleatorias(14))
+                .selecionarEstado(Utils.gerarNumeroRandom(1, 50))
+                .preencherCep(Utils.gerarNumeroRandom(10000, 99999) + "")
+                .selecionarPais(21)
+                .preencherInformacoesAdicionais(Utils.gerarLetrasAleatorias(18))
+                .preencherTelefoneCelular(Utils.gerarNumeroRandom(10000000, 99999999) + "")
+                .clicarBotaoCadastrar();
+    }
 }
