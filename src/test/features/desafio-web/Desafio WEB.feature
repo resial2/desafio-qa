@@ -5,6 +5,15 @@
   Funcionalidade: Login
     Serão realizados testes com tentativas de login no site proposto.
 
+    @T
+  Cenario: Realizar Cadastro
+    Dada abertura do site na página principal
+    Quando clicar no botão "Sign in"
+    E preencher o campo de e-mail para cadastro com um e-mail gerado aleatóriamente, salvando a informação no arquivo de "file.login"
+    E clicar no botão "Create an Account"
+    E realizar o preenchimento do formulário para cadastro com uma senha gerada aleatóriamente que será salva no arquivo "file.login"
+    Entao deverá ser exibida a pagina principal do usuário
+
   Cenario: Login com Sucesso
     Dada abertura do site na página principal
     Quando clicar no botão "Sign in"
