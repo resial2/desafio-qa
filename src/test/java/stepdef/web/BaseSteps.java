@@ -27,14 +27,12 @@ public class BaseSteps {
     @Before()
     public void init() throws UnsupportedEncodingException {
         ExtentService.getInstance().setGherkinDialect("pt");
-        WebDriver webDriver = new WebDriver();
-        driver = webDriver.configDriver("CHROME");
-        propertiesConfig = Utils.getProperties(DEFAULT_PROPERTIES_FILES_PATH);
     }
 
     @After()
     public void clean() {
-        driver.quit();
+        if(driver != null)
+            driver.quit();
     }
 
     private Home home;
@@ -44,6 +42,9 @@ public class BaseSteps {
 
     @Dada("abertura do site na página principal")
     public void abertura_do_site_na_página_principal() {
+        WebDriver webDriver = new WebDriver();
+        driver = webDriver.configDriver("CHROME");
+        propertiesConfig = Utils.getProperties(DEFAULT_PROPERTIES_FILES_PATH);
         home = new Home(driver);
         home.acessarPaginaInicial();
     }
