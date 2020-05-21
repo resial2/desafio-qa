@@ -1,6 +1,8 @@
 package stepdef.backend;
 
+import com.aventstack.extentreports.service.ExtentService;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dada;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
@@ -9,8 +11,12 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Assert;
+import qa.desafio.Utils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +29,14 @@ public class BaseStepsAPI {
     private ExtractableResponse eResponse;
     private Response response;
 
+    protected static PropertiesConfiguration propertiesConfig;
+    private static final String DEFAULT_PROPERTIES_FILES_PATH = "src/test/resources/properties/files.properties";
+
+    @Before
+    public void init() throws UnsupportedEncodingException {
+        ExtentService.getInstance().setGherkinDialect("pt");
+        propertiesConfig = Utils.getProperties(DEFAULT_PROPERTIES_FILES_PATH);
+    }
 
     @Dada("configuração da requisição com as informações abaixo")
     public void configuracaoDaRequisicaoComAsInformacoesAbaixo(DataTable dataTable) {
@@ -59,4 +73,10 @@ public class BaseStepsAPI {
         System.out.println("As mensagens coincidem. [Esperada: " + expectedMessage + "] [Resposta: " + response + "]");
     }
 
+    @E("será salva a informação de ID para uso futuro no arquivo {string}")
+    public void seráSalvaAInformaçãoDeIDParaUsoFuturo(String file) throws ConfigurationException {
+        PropertiesConfiguration props = Utils.getProperties(propertiesConfig.getString(file));
+        props.setProperty("id.employee", eResponse.body().jsonPath().getString("data.id"));
+        props.save();
+    }
 }
