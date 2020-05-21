@@ -17,10 +17,10 @@
 
         <protocol>http</protocol>
         <!-- title of the document -->
-        <documentTitle>Extent</documentTitle>
+        <documentTitle>Relatório de Execução</documentTitle>
         <!-- report name - displayed at top-nav -->
 
-        <reportName>Grasshopper Report</reportName>
+        <reportName>Desafio QA</reportName>
         <!-- location of charts in the test view -->
 
         <!-- top, bottom -->
