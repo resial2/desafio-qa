@@ -1,9 +1,10 @@
 package stepdef.web;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.service.ExtentService;
 import io.cucumber.java.Before;
 import io.cucumber.java.After;
 import io.cucumber.java.pt.*;
-import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Assert;
 import qa.desafio.Utils;
@@ -13,6 +14,8 @@ import qa.desafio.pageobjects.automationpractice.Home;
 import qa.desafio.pageobjects.automationpractice.Login;
 import qa.desafio.pageobjects.automationpractice.UserMainPage;
 
+import java.io.UnsupportedEncodingException;
+
 
 public class BaseSteps {
 
@@ -21,7 +24,8 @@ public class BaseSteps {
     private static PropertiesConfiguration propertiesConfig;
 
     @Before()
-    public void config(){
+    public void init() throws UnsupportedEncodingException {
+        ExtentService.getInstance().setGherkinDialect("pt");
         WebDriver webDriver = new WebDriver();
         driver = webDriver.configDriver("CHROME");
         propertiesConfig =  Utils.getProperties(DEFAULT_PROPERTIES_FILES_PATH);
