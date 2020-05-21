@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
         tags = {},
         strict = true,
         glue = "stepdef",
-        plugin = {}
+        plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
 )
 
 public class RunTest {
