@@ -5,7 +5,6 @@
   Funcionalidade: Login
     Serão realizados testes com tentativas de login no site proposto.
 
-    @T
   Cenario: Realizar Cadastro
     Dada abertura do site na página principal
     Quando clicar no botão "Sign in"
