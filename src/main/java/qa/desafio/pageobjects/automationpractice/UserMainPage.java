@@ -23,7 +23,7 @@ public class UserMainPage {
     private WebElement txtUser;
 
     public boolean verificarLoginComSucesso(){
-        return wait.until(ExpectedConditions.visibilityOf(txtUser)).isDisplayed();
+        return wait.until(ExpectedConditions.elementToBeClickable(txtUser)).isDisplayed();
     }
 
 }
