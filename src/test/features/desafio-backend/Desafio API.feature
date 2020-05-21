@@ -13,6 +13,7 @@ Funcionalidade: Testes de API
     Quando realizar o envio da requisição para URL "http://dummy.restapiexample.com/api/v1/create"
     Entao deverá ser retornado o status code <STATUS_CODE>
     E será validada a mensagem "<MENSAGEM>"
+    E será salva a informação de ID para uso futuro no arquivo "file.api"
     Exemplos:
       | NOME      | SALARIO | IDADE | STATUS_CODE | MENSAGEM |
       | Fulano QA | 4000.00 | 22    | 200         | success  |
