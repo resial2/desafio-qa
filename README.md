@@ -37,6 +37,19 @@ Projeto desenvolvido para avaliação do processo seletivo AME
   4 - Ao término da execução, o relatório será gerado no caminho 'target/extent-reports/ExtentHtml.html'
   ```
   
+### Ferramentas Utilizadas
+
+- IntelliJ IDEA Community Edition 2019.3.5
+- Apache Maven 3.5.4
+- Java SDK 8
+- Selenium Java 3.149.5
+- Cucumber Java 5.7.0
+- Cucumber Junit 5.7.0
+- Extent-Reports 4.1.5
+- Tech Grasshopper Extent Cucumber 5 Adapter 1.3.1
+- Commons Configuration 1.9
+- Junit 4.11
+  
 ### Autor
 
   **João Rener**
