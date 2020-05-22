@@ -5,6 +5,8 @@ import io.cucumber.java.pt.Dada;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
 import io.cucumber.java.pt.Quando;
+import io.restassured.http.Cookie;
+import io.restassured.http.Cookies;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
@@ -80,18 +82,37 @@ public class BaseStepsAPI {
     @Dada("configuração da requisição com a informação armazenada no arquivo {string}")
     public void configuraçãoDaRequisiçãoComAInformaçãoArmazenadaNoArquivo(String file) {
         props = Utils.getProperties(propertiesConfig.getString(file));
-        idEmployee =  props.getString("id.employee");
+        idEmployee = props.getString("id.employee");
         rSpecification = given()
                 .contentType("application/json;charset=utf-8");
     }
 
     @Quando("realizar o envio da requisição GET para URL {string}")
     public void realizarOEnvioDaRequisiçãoGETParaURL(String url) {
-        response = rSpecification.get(url + idEmployee);
+        String urlRequest = url;
+        if (url.endsWith("/")) {
+            urlRequest = urlRequest + idEmployee;
+        } else {
+            idEmployee = url.substring(url.lastIndexOf("/") + 1);
+        }
+        rSpecification.cookies(rSpecification.get(urlRequest).detailedCookies());
+        response = rSpecification.get(urlRequest);
+
+        System.out.println("ID do funcinário: " + idEmployee);
     }
 
     @Quando("realizar o envio da requisição DELETE para URL {string}")
     public void realizarOEnvioDaRequisiçãoDELETEParaURL(String url) {
-        response = rSpecification.delete(url + idEmployee);
+        String urlRequest = url;
+        if (url.endsWith("/")) {
+            urlRequest = urlRequest + idEmployee;
+        } else {
+            idEmployee = url.substring(url.lastIndexOf("/") + 1);
+        }
+        String test = "ezoadgid_133674=-1; ezoref_133674=; ezoab_133674=mod54-c; PHPSESSID=9db78a621b64e886220bf8b6d3e99bdb; active_template::133674=pub_site.1590161357";
+        rSpecification.cookie(test);
+        response = rSpecification.delete(urlRequest);
+
+        System.out.println("ID do funcinário: " + idEmployee);
     }
 }
