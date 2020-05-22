@@ -37,6 +37,6 @@ Projeto desenvolvido para avaliação do processo seletivo AME
   4 - Ao término da execução, o relatório será gerado no caminho 'target/extent-reports/ExtentHtml.html'
   ```
   
-- Autor
+### Autor
 
   **João Rener**
