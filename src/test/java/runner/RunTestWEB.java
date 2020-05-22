@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
         features = "src/test/features",
         tags = {"@LOGIN"},
         strict = true,
-        glue = {"stepdef/web"},
+        glue = {"stepdef/web", "pretest"},
         plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
 )
 

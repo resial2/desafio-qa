@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
         features = "src/test/features",
         tags = {"@API"},
         strict = true,
-        glue = {"stepdef/api"},
+        glue = {"stepdef/api", "pretest"},
         plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}
 )
 
