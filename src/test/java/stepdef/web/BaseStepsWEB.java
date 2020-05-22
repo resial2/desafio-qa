@@ -1,42 +1,22 @@
 package stepdef.web;
 
-import com.aventstack.extentreports.service.ExtentService;
-import io.cucumber.java.Before;
-import io.cucumber.java.After;
 import io.cucumber.java.pt.*;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Assert;
 import qa.desafio.Utils;
 import qa.desafio.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import qa.desafio.pageobjects.automationpractice.Home;
 import qa.desafio.pageobjects.automationpractice.Login;
 import qa.desafio.pageobjects.automationpractice.Register;
 import qa.desafio.pageobjects.automationpractice.UserMainPage;
 
-import java.io.UnsupportedEncodingException;
+import static pretest.PreTest.driver;
+import static pretest.PreTest.propertiesConfig;
+
+public class BaseStepsWEB {
 
 
-public class BaseSteps {
-
-    private static final String DEFAULT_PROPERTIES_FILES_PATH = "src/test/resources/properties/files.properties";
-    private static RemoteWebDriver driver;
-    private static PropertiesConfiguration propertiesConfig;
-
-    @Before()
-    public void init() throws UnsupportedEncodingException {
-        ExtentService.getInstance().setGherkinDialect("pt");
-        WebDriver webDriver = new WebDriver();
-        driver = webDriver.configDriver("CHROME");
-        propertiesConfig = Utils.getProperties(DEFAULT_PROPERTIES_FILES_PATH);
-    }
-
-    @After()
-    public void clean() {
-        if(driver != null)
-            driver.quit();
-    }
 
     private Home home;
     private Login login;
@@ -45,6 +25,8 @@ public class BaseSteps {
 
     @Dada("abertura do site na página principal")
     public void abertura_do_site_na_página_principal() {
+        WebDriver webDriver = new WebDriver();
+        driver = webDriver.configDriver("CHROME");
         home = new Home(driver);
         home.acessarPaginaInicial();
     }

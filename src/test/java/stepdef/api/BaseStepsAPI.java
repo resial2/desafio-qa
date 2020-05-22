@@ -1,8 +1,6 @@
 package stepdef.api;
 
-import com.aventstack.extentreports.service.ExtentService;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.Before;
 import io.cucumber.java.pt.Dada;
 import io.cucumber.java.pt.E;
 import io.cucumber.java.pt.Entao;
@@ -16,11 +14,11 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Assert;
 import qa.desafio.Utils;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static pretest.PreTest.propertiesConfig;
 
 public class BaseStepsAPI {
 
@@ -31,15 +29,6 @@ public class BaseStepsAPI {
 
     private PropertiesConfiguration props;
     private String idEmployee;
-
-    private static PropertiesConfiguration propertiesConfig;
-    private static final String DEFAULT_PROPERTIES_FILES_PATH = "src/test/resources/properties/files.properties";
-
-    @Before
-    public void init() throws UnsupportedEncodingException {
-        ExtentService.getInstance().setGherkinDialect("pt");
-        propertiesConfig = Utils.getProperties(DEFAULT_PROPERTIES_FILES_PATH);
-    }
 
     @Dada("configuração da requisição com as informações abaixo")
     public void configuracaoDaRequisicaoComAsInformacoesAbaixo(DataTable dataTable) {
@@ -93,7 +82,7 @@ public class BaseStepsAPI {
         props = Utils.getProperties(propertiesConfig.getString(file));
         idEmployee =  props.getString("id.employee");
         rSpecification = given()
-                .relaxedHTTPSValidation();
+                .contentType("application/json;charset=utf-8");
     }
 
     @Quando("realizar o envio da requisição GET para URL {string}")
