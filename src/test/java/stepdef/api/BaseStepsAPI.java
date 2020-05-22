@@ -29,7 +29,10 @@ public class BaseStepsAPI {
     private ExtractableResponse eResponse;
     private Response response;
 
-    protected static PropertiesConfiguration propertiesConfig;
+    private PropertiesConfiguration props;
+    private String idEmployee;
+
+    private static PropertiesConfiguration propertiesConfig;
     private static final String DEFAULT_PROPERTIES_FILES_PATH = "src/test/resources/properties/files.properties";
 
     @Before
@@ -44,7 +47,7 @@ public class BaseStepsAPI {
 
         String body = "{" +
                 "\"name\": \"" + table.get(0).get("NOME") + "\"," +
-                "\"salary\": \"" + table.get(0).get("SALARIO") + "\"" +
+                "\"salary\": \"" + table.get(0).get("SALARIO") + "\"," +
                 "\"age\": \"" + table.get(0).get("IDADE") + "\"" +
                 "}";
 
@@ -53,13 +56,15 @@ public class BaseStepsAPI {
                 .body(body);
     }
 
-    @Quando("realizar o envio da requisição para URL {string}")
+    @Quando("realizar o envio da requisição POST para URL {string}")
     public void realizarOEnvioDaRequisiçãoParaURL(String URL) {
         response = rSpecification.post(URL);
     }
 
     @Entao("deverá ser retornado o status code {int}")
     public void deveráSerRetornadoOStatusCode(int statusCode) {
+        response.getBody().prettyPrint();
+
         vResponse = response.then()
                 .statusCode(statusCode);
         System.out.println("Status code confere. [Status Code: " + vResponse.extract().statusCode() + "]");
@@ -75,8 +80,26 @@ public class BaseStepsAPI {
 
     @E("será salva a informação de ID para uso futuro no arquivo {string}")
     public void seráSalvaAInformaçãoDeIDParaUsoFuturo(String file) throws ConfigurationException {
-        PropertiesConfiguration props = Utils.getProperties(propertiesConfig.getString(file));
+        props = Utils.getProperties(propertiesConfig.getString(file));
         props.setProperty("id.employee", eResponse.body().jsonPath().getString("data.id"));
         props.save();
+    }
+
+    @Dada("configuração da requisição com a informação armazenada no arquivo {string}")
+    public void configuraçãoDaRequisiçãoComAInformaçãoArmazenadaNoArquivo(String file) {
+        props = Utils.getProperties(propertiesConfig.getString(file));
+        idEmployee =  props.getString("id.employee");
+        rSpecification = given()
+                .relaxedHTTPSValidation();
+    }
+
+    @Quando("realizar o envio da requisição GET para URL {string}")
+    public void realizarOEnvioDaRequisiçãoGETParaURL(String url) {
+        response = rSpecification.get(url + idEmployee);
+    }
+
+    @Quando("realizar o envio da requisição DELETE para URL {string}")
+    public void realizarOEnvioDaRequisiçãoDELETEParaURL(String url) {
+        response = rSpecification.delete(url + idEmployee);
     }
 }
