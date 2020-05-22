@@ -20,12 +20,12 @@ Funcionalidade: Testes de API
 
   Cenario: Consulta de empregado
     Dada configuração da requisição com a informação armazenada no arquivo "file.api"
-    Quando realizar o envio da requisição GET para URL "http://dummy.restapiexample.com/api/v1/employee/"
+    Quando realizar o envio da requisição GET para URL "http://dummy.restapiexample.com/api/v1/employee/4"
     Entao deverá ser retornado o status code 200
     E será validada a mensagem "success"
 
   Cenario: Exclusão de empregado
     Dada configuração da requisição com a informação armazenada no arquivo "file.api"
-    Quando realizar o envio da requisição DELETE para URL "http://dummy.restapiexample.com/api/v1/delete/"
+    Quando realizar o envio da requisição DELETE para URL "http://dummy.restapiexample.com/api/v1/delete/4"
     Entao deverá ser retornado o status code 200
     E será validada a mensagem "success"
