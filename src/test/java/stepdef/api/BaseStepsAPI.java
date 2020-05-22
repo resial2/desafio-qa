@@ -82,6 +82,9 @@ public class BaseStepsAPI {
     public void seráSalvaAInformaçãoDeIDParaUsoFuturo(String file) throws ConfigurationException {
         props = Utils.getProperties(propertiesConfig.getString(file));
         props.setProperty("id.employee", eResponse.body().jsonPath().getString("data.id"));
+        props.setProperty("name.employee", eResponse.body().jsonPath().getString("data.name"));
+        props.setProperty("salary.employee", eResponse.body().jsonPath().getString("data.salary"));
+        props.setProperty("age.employee", eResponse.body().jsonPath().getString("data.age"));
         props.save();
     }
 
