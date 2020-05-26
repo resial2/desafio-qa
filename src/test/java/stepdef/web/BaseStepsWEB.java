@@ -5,7 +5,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Assert;
 import qa.desafio.Utils;
-import qa.desafio.WebDriver;
+import qa.desafio.drivers.WebDriver;
 import qa.desafio.pageobjects.automationpractice.Home;
 import qa.desafio.pageobjects.automationpractice.Login;
 import qa.desafio.pageobjects.automationpractice.Register;
