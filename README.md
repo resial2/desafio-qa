@@ -55,6 +55,15 @@ Projeto desenvolvido para avaliação do processo seletivo AME
   
   OBS.: Caso deseje utilizar outra AVD que não seja a versão indicada (Nexus 5X API 28), será necessário informar o nome da AVD que será utilizada no arquivo que se encontra no diretório "src/test/resources/properties/mobile/mobile.properties"
   
+- Todos os Testes
+  ```
+  Para execução dos testes de api siga os passos:
+  1 - Execute o prompt de comando;
+  2 - Navegue até o diretório do projeto onde se encontra o arquivo "pom.xml";
+  3 - Execute o comando 'mvn clean test -Drunner=RunTest';
+  4 - Ao término da execução, o relatório será gerado no caminho 'target/extent-reports/ExtentHtml.html' com informações de todos os testes.
+  ```  
+  
 ### Ferramentas Utilizadas
 
 - IntelliJ IDEA Community Edition 2020.1.1
