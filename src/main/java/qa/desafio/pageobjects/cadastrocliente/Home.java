@@ -32,6 +32,9 @@ public class Home {
     @iOSXCUITFindBys(@iOSXCUITBy(id = "iosId"))
     private List<MobileElement> lstCadastrados;
 
+    @AndroidFindBy(xpath = "/hierarchy/android.widget.Toast")
+    @iOSXCUITFindBy(xpath = "iosXpath")
+    private MobileElement txtExclusao;
 
     private String name;
     public Home preencherCampoPesquisa(String nome){
@@ -47,5 +50,19 @@ public class Home {
         return new DetalhesCliente(driver, name);
     }
 
+    public String pegarMensagemExclusão(){
+        return txtExclusao.getText();
+    }
 
+    public Home clicarBotaoMenu(){
+        bttMenu.click();
+        System.out.println("Botão de menu clicado.");
+        return this;
+    }
+
+    public DetalhesCliente clicarBotaoCadastrarNovo(){
+        bttCadastrarNovo.click();
+        System.out.println("Botão de novo cadastro clicado.");
+        return new DetalhesCliente(driver);
+    }
 }
