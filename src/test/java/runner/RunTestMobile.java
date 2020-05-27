@@ -1,11 +1,14 @@
 package runner;
 
+import io.appium.java_client.AppiumDriver;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
-import qa.desafio.drivers.MobileDriver;
+import qa.desafio.drivers.AppiumService;
+
+import java.io.IOException;
 
 
 @RunWith(Cucumber.class)
@@ -25,8 +28,8 @@ public class RunTestMobile {
     }
 
     @AfterClass
-    public static void tearDown(){
-        MobileDriver.stopAppiumService();
+    public static void tearDown() throws IOException {
+        AppiumService.stopAppiumService();
     }
 
 }
