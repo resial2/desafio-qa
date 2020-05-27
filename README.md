@@ -6,6 +6,11 @@ Projeto desenvolvido para avaliação do processo seletivo AME
 
 - Java 8 ou superior;
 - Maven 3.5.4 ou superior;
+- Appium 1.17.1 (Instalação via NodeJS)
+- Appium-doctor 1.15.1 (Instalação via NodeJS)
+- Configurações recomendadas pelo comando "appium-doctor --android"
+- AVD (Android Virtual Device) baixada por meio do Android Studio. (Versão recomendada Nexus 5X API 28)
+- Modo Desenvolvedor liberado no computador
 
 ### Execução dos testes
 
@@ -37,9 +42,22 @@ Projeto desenvolvido para avaliação do processo seletivo AME
   4 - Ao término da execução, o relatório será gerado no caminho 'target/extent-reports/ExtentHtml.html'
   ```
   
+- Mobile
+  ```
+  Para execução dos testes de api siga os passos:
+  1 - Execute o prompt de comando;
+  2 - Navegue até o diretório do projeto onde se encontra o arquivo "pom.xml";
+  3 - Existem 2 opções para execução dos testes
+            3.1 - Execute o comando 'mvn clean test -Drunner=RunTestMobile'
+            3.2 - Execute o comando 'mvn clean test -Drunner=RunTest -Dcucumber.options="--tags @MOBILE"
+  4 - Ao término da execução, o relatório será gerado no caminho 'target/extent-reports/ExtentHtml.html'
+  ```  
+  
+  OBS.: Caso deseje utilizar outra AVD que não seja a versão indicada (Nexus 5X API 28), será necessário informar o nome da AVD que será utilizada no arquivo que se encontra no diretório "src/test/resources/properties/mobile/mobile.properties"
+  
 ### Ferramentas Utilizadas
 
-- IntelliJ IDEA Community Edition 2019.3.5
+- IntelliJ IDEA Community Edition 2020.1.1
 - Apache Maven 3.5.4
 - Java SDK 8
 - Selenium Java 3.149.5
@@ -49,7 +67,11 @@ Projeto desenvolvido para avaliação do processo seletivo AME
 - Tech Grasshopper Extent Cucumber 5 Adapter 1.3.1
 - Commons Configuration 1.9
 - Junit 4.11
-  
+- Appium 1.17.1
+- Appium Desktop 1.15.1
+- Node JS 6.14.4
+- Android Studio 3.6.3
+ 
 ### Autor
 
   **João Rener**
