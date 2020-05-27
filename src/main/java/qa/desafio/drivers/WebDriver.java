@@ -1,4 +1,4 @@
-package qa.desafio;
+package qa.desafio.drivers;
 
 import org.junit.Assert;
 import org.openqa.selenium.Platform;

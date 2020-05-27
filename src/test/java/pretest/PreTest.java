@@ -6,7 +6,6 @@ import io.cucumber.java.Before;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import qa.desafio.Utils;
-import qa.desafio.WebDriver;
 
 import java.io.UnsupportedEncodingException;
 
