@@ -5,21 +5,22 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Assert;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class MobileDriver {
 
-    public String so;
-    public String platform = "android";
-    public AppiumDriver<MobileElement> driver;
-    public String apkFile;
+    private final String so;
+    private String platform = "android";
+    private AppiumDriver<MobileElement> driver;
+    private final String apkFile;
+
+
 
     public MobileDriver(String apkFile) {
         this.apkFile = apkFile;
@@ -53,35 +54,37 @@ public class MobileDriver {
 
         if (platform.equalsIgnoreCase("android")) {
 
-            capabilities.setCapability("app", new File(apkFile));
+            capabilities.setCapability(MobileCapabilityType.APP, new File(apkFile).getAbsolutePath());
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
+            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android-Device");
+            capabilities.setCapability("avd", props.getString("virtual.device.name.android"));
+            capabilities.setCapability("noReset", true);
+            capabilities.setCapability("autoGrantPermissions", true);
+            capabilities.setCapability("uiautomator2ServerInstallTimeout", 360000);
+            capabilities.setCapability("fullReset", false);
             capabilities.setCapability("platform", so);
-            capabilities.setCapability("platformName", "Android");
-            capabilities.setCapability("deviceName", props.getString("device.name.android"));
-            capabilities.setCapability("unicodeKeyboard", true);
-            capabilities.setCapability("disableAndroidWatchers", true);
-            try {
-                driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"), capabilities);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                Assert.fail("Falha ao configurar AVD.");
-            }
+
+            AppiumService.startAppiumService();
+            driver = new AndroidDriver<>(AppiumService.getServiceUrl(), capabilities);
+
         } else if (platform.equalsIgnoreCase("ios")) {
-            capabilities.setCapability("app", new File(apkFile));
+            capabilities.setCapability(MobileCapabilityType.APP, new File(apkFile).getAbsolutePath());
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "ios");
+            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
+            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iOS");
+            capabilities.setCapability("noReset", true);
+            capabilities.setCapability("avd", props.getString("virtual.device.name.ios"));
             capabilities.setCapability("platform", so);
-            capabilities.setCapability("platformName", "ios");
-            capabilities.setCapability("deviceName", props.getString("device.name.ios"));
-            capabilities.setCapability("unicodeKeyboard", true);
-            capabilities.setCapability("disableAndroidWatchers", true);
-            try {
-                driver = new IOSDriver<>(new URL("http://localhost:4723/wd/hub"), capabilities);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-                Assert.fail("Falha ao configurar Device.");
-            }
+            capabilities.setCapability("fullReset", false);
+
+            AppiumService.startAppiumService();
+            driver = new IOSDriver<>(AppiumService.getServiceUrl(), capabilities);
+
         }
-
         return driver;
-
     }
+
+
 
 }
