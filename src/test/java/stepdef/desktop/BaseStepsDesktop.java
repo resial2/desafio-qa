@@ -20,7 +20,7 @@ public class BaseStepsDesktop {
 
     @Entao("encerrarei o driver")
     public void encerrareiODriver() throws IOException, InterruptedException {
-        driver.findElement(By.name("Editor de Texto")).sendKeys("O amo a Malia Mallety :3 <3");
+        driver.findElement(By.name("Editor de Texto")).sendKeys("Teste de integração com driver desktop");
         Thread.sleep(3000);
         driver.findElement(By.name("Editor de Texto")).clear();
         driver.quit();
