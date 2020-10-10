@@ -88,7 +88,6 @@ public class BaseStepsWEB {
         Assert.assertEquals("Texto esperado e Texto apresentado estão divergentes. [ Apresentado: " + textoApresentado + " ] [ Esperado: " + mensagemEsperada + " }", mensagemEsperada, textoApresentado);
     }
 
-
     @E("preencher o campo de e-mail para cadastro com um e-mail gerado aleatóriamente, salvando a informação no arquivo de {string}")
     public void preencherOCampoDeEMailParaCadastroComUmEMailGeradoAleatóriamente(String file) throws ConfigurationException {
         String email = login.preencherCampoEmailRegister();
